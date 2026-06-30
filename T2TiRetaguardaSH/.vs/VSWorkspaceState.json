@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Controllers",
+    "\\Controllers\\Cadastros",
+    "\\Controllers\\PDV",
+    "\\Properties",
+    "\\Properties\\PublishProfiles",
+    "\\Services",
+    "\\Services\\ACBr"
+  ],
+  "SelectedNode": "\\Controllers\\PDV\\PdvTipoPlanoController.cs",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,0 +1,88 @@
+version: '3.8'
+services:
+  # --- SERVIÇO DA APLICAÇÃO .NET ---
+  app_dotnet:
+    container_name: t2ti-app-dotnet
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_URLS=http://+:8000
+      - ConnectionStrings__DefaultConnection=Server=t2ti-db-mysql;Port=3306;Database=retaguarda_sh;Uid=t2ti_user;Pwd=123456;
+      - ProdutoImagens__RootPath=/var/techone/storage/produtos-imagens
+      - ASPNETCORE_HTTPS_PORT=
+    volumes:
+      - ./appsettings.json:/app/appsettings.json:ro
+      - /var/techone/storage/produtos-imagens:/var/techone/storage/produtos-imagens
+    networks:
+      - t2ti-rede
+    # ADICIONE ISTO - Espera o MySQL estar saudável
+    depends_on:
+      db_mysql:
+        condition: service_healthy
+
+  # --- SERVIÇO DO BANCO DE DADOS MYSQL ---
+  db_mysql:
+    container_name: t2ti-db-mysql
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'MySql@2025'
+      MYSQL_DATABASE: 'retaguarda_sh'
+      MYSQL_USER: 't2ti_user'
+      MYSQL_PASSWORD: '123456'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d:z
+    ports:
+      - "3306:3306"
+    networks:
+      - t2ti-rede
+    # ADICIONE ISTO - Healthcheck do MySQL
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pMySql@2025"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  # --- SERVIÇO DO NGINX ---
+  nginx:
+
+    container_name: t2ti-proxy-nginx
+
+    image: nginx:latest
+
+    restart: unless-stopped
+
+    volumes:
+
+      - ./Nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+
+      - /var/www/certbot:/var/www/certbot:ro
+
+      - /var/www/downloads:/var/www/downloads:ro
+
+    ports:
+
+      - "80:80"
+
+      - "443:443"
+
+    depends_on:
+
+      - app_dotnet
+
+    networks:
+
+      - t2ti-rede
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  t2ti-rede:
+    driver: bridge

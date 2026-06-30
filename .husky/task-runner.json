@@ -1,0 +1,17 @@
+{
+   "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+   "tasks": [
+      {
+         "name": "build",
+         "group": "pre-commit",
+         "command": "dotnet",
+         "args": ["build", "T2TiRetaguardaSH.sln", "--nologo", "-v", "quiet"]
+      },
+      {
+         "name": "test",
+         "group": "pre-commit",
+         "command": "dotnet",
+         "args": ["test", "T2TiRetaguardaSH.sln", "--no-build", "--nologo", "-v", "quiet"]
+      }
+   ]
+}

@@ -1,0 +1,295 @@
+/*******************************************************************************
+Title: T2Ti ERP 3.0                                                                
+Description: Controller relacionado à tabela [EMPRESA] 
+                                                                                
+The MIT License                                                                 
+                                                                                
+Copyright: Copyright (C) 2021 T2Ti.COM                                          
+                                                                                
+Permission is hereby granted, free of charge, to any person                     
+obtaining a copy of this software and associated documentation                  
+files (the "Software"), to deal in the Software without                         
+restriction, including without limitation the rights to use,                    
+copy, modify, merge, publish, distribute, sublicense, and/or sell               
+copies of the Software, and to permit persons to whom the                       
+Software is furnished to do so, subject to the following                        
+conditions:                                                                     
+                                                                                
+The above copyright notice and this permission notice shall be                  
+included in all copies or substantial portions of the Software.                 
+                                                                                
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,                 
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES                 
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND                        
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT                     
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,                    
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING                    
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR                   
+OTHER DEALINGS IN THE SOFTWARE.                                                 
+                                                                                
+       The author may be contacted at:                                          
+           t2ti.com@gmail.com                                                   
+                                                                                
+@author Albert Eije (alberteije@gmail.com)                    
+@version 1.0.0
+*******************************************************************************/
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
+using T2TiRetaguardaSH.Models;
+using T2TiRetaguardaSH.Services;
+using T2TiRetaguardaSH.Util;
+
+namespace T2TiRetaguardaSH.Controllers
+{
+    [Route("empresa")]
+    [Produces("application/json")]
+    public class EmpresaController : Controller
+    {
+        private readonly EmpresaService _service;
+
+        public EmpresaController()
+        {
+            _service = new EmpresaService();
+        }
+
+        [HttpPost]
+        public IActionResult AtualizarEmpresa([FromBody] String corpoRequisicao)
+        {
+            try
+            {
+                Empresa empresa = JsonConvert.DeserializeObject<Empresa>(Biblioteca.Decifrar(corpoRequisicao));
+                _service.Atualizar(empresa);
+                empresa = _service.ConsultarObjetoFiltro("Cnpj = '" + empresa.Cnpj + "'");
+                String retorno = JsonConvert.SerializeObject(empresa, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                return Ok(Biblioteca.Cifrar(retorno));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Atualizar Empresa]", ex));
+            }
+        }
+
+        [Route("registra-empresa")]
+        [HttpPost]
+        public IActionResult RegistrarEmpresa([FromBody] String corpoRequisicao)
+        {
+            try
+            {
+                Empresa empresa = JsonConvert.DeserializeObject<Empresa>(Biblioteca.Decifrar(corpoRequisicao));
+                _service.Registrar(empresa);
+                empresa = _service.ConsultarObjetoFiltro("Cnpj = '" + empresa.Cnpj + "'");
+                String retorno = JsonConvert.SerializeObject(empresa, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                return Ok(Biblioteca.Cifrar(retorno));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Registrar Empresa]", ex));
+            }
+        }
+
+        [Route("registra-empresa-erp")]
+        [HttpPost]
+        public IActionResult RegistrarEmpresaErp([FromBody] String corpoRequisicao)
+        {
+            try
+            {
+                EmpresaModel empresa = JsonConvert.DeserializeObject<EmpresaModel>(Biblioteca.Decifrar(corpoRequisicao));
+                _service.RegistrarEmpresaErp(empresa);
+                empresa = _service.ConsultarObjetoModelFiltro("Cnpj = '" + empresa.Cnpj + "'");
+                String retorno = JsonConvert.SerializeObject(empresa, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                return Ok(Biblioteca.Cifrar(retorno));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Registrar Empresa]", ex));
+            }
+        }
+
+                [Route("envia-email-confirmacao")]
+        [HttpPost]
+        public IActionResult EnviarEmailConfirmacao([FromBody] CnpjRequest request)
+        {
+            try
+            {
+                var empresa = _service.ConsultarObjetoPorCnpjDireto(request.Cnpj);
+                if (empresa == null)
+                    return StatusCode(404, new RetornoJsonErro(404, "CNPJ nao encontrado", null));
+
+                _service.EnviarEmailConfirmacao(empresa, request.Login);
+                return Ok(empresa);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Enviar Email Confirmacao]", ex));
+            }
+        }
+
+        
+
+               [Route("confere-codigo-confirmacao")]
+        [HttpPost]
+        public IActionResult ConferirCodigoConfirmacao([FromBody] CnpjRequest request)
+        {
+            try
+            {
+                string codigoConfirmacao = Request.Headers["codigo-confirmacao"].ToString();
+                if (string.IsNullOrEmpty(codigoConfirmacao))
+                    return StatusCode(400, new RetornoJsonErro(400, "Header 'codigo-confirmacao' nao informado", null));
+
+                var empresa = new Empresa { Cnpj = request.Cnpj };
+                _service.ConferirCodigoConfirmacao(empresa, codigoConfirmacao, request.Login);
+
+                empresa = _service.ConsultarObjetoPorCnpjDireto(request.Cnpj);
+                return Ok(empresa);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Conferir Codigo Confirmacao]", ex));
+            }
+        }
+
+        
+
+        [HttpPost("testar-envio")]
+        public IActionResult TestarEnvioEmail([FromBody] TesteEmailRequest request)
+        {
+            try
+            {
+                Console.WriteLine("=== TESTE VIA API ===");
+
+                bool resultado = Biblioteca.EnviarEmail(
+                    request.Assunto ?? "Teste de Email",
+                    request.Destino ?? "email_de_teste@dominio.com",
+                    request.Corpo ?? "<h1>Teste</h1><p>Email de teste enviado pela API</p>"
+                );
+
+                return Ok(new
+                {
+                    sucesso = resultado,
+                    mensagem = resultado ? "Email enviado com sucesso" : "Falha ao enviar email",
+                    timestamp = DateTime.Now
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    sucesso = false,
+                    erro = ex.Message,
+                    detalhes = ex.StackTrace
+                });
+            }
+        }
+
+        public class TesteEmailRequest
+        {
+            public string Assunto { get; set; }
+            public string Destino { get; set; }
+            public string Corpo { get; set; }
+        }
+
+        //[HttpGet]
+        //public IActionResult ConsultarListaEmpresa([FromQuery]string filter)
+        //{
+        //    try
+        //    {
+        //        IEnumerable<Empresa> lista;
+        //        if (filter == null)
+        //        {
+        //            lista = _service.ConsultarLista();
+        //        }
+        //        else
+        //        {
+        //            // define o filtro
+        //            Filtro filtro = new Filtro(filter);
+        //            lista = _service.ConsultarListaFiltro(filtro);
+        //        }
+        //        return Ok(lista);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Consultar Lista Empresa]", ex));
+        //    }
+        //}
+
+        [HttpGet("cnpj/{cnpj}", Name = "ConsultarObjetoEmpresa")]
+        public IActionResult ConsultarObjetoEmpresa(string cnpj)
+        {
+            try
+            {
+                var objeto = _service.ConsultarObjetoModelFiltro("Cnpj = '" + cnpj + "'");
+
+                if (objeto == null)
+                {
+                    return StatusCode(404, new RetornoJsonErro(404, "Registro não localizado [Consultar Objeto Empresa]", null));
+                }
+                else
+                {
+                    return Ok(objeto);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Consultar Objeto Empresa]", ex));
+            }
+        }
+
+        [HttpGet("teste")]
+        public IActionResult Teste()
+        {
+            return Ok("API funcionando!");
+        }
+
+        //[HttpPut("{id}")]
+        //public IActionResult AlterarEmpresa([FromBody]Empresa objJson, int id)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return StatusCode(400, new RetornoJsonErro(400, "Objeto inválido [Alterar Empresa]", null));
+        //        }
+
+        //        if (objJson.Id != id)
+        //        {
+        //            return StatusCode(400, new RetornoJsonErro(400, "Objeto inválido [Alterar Empresa] - ID do objeto difere do ID da URL.", null));
+        //        }
+
+        //        _service.Alterar(objJson);
+
+        //        return ConsultarObjetoEmpresa(objJson.Cnpj);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Alterar Empresa]", ex));
+        //    }
+        //}
+
+        //[HttpDelete("{id}")]
+        //public IActionResult ExcluirEmpresa(int id)
+        //{
+        //    try
+        //    {
+        //        var objeto = _service.ConsultarObjeto(id);
+
+        //        _service.Excluir(objeto);
+
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new RetornoJsonErro(500, "Erro no Servidor [Excluir Empresa]", ex));
+        //    }
+        //}
+
+        public class CnpjRequest
+        {
+            public string Cnpj { get; set; }
+            public string Login { get; set; }
+        }
+
+
+    }
+}

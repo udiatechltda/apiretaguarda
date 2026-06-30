@@ -1,0 +1,197 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\PDV\\PdvTipoPlanoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\PDV\\PdvTipoPlanoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\PDV\\PdvPlanoPagamentoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\PDV\\PdvPlanoPagamentoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Properties\\launchSettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Properties\\launchSettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\Cadastros\\ErpTipoPlanoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\Cadastros\\ErpTipoPlanoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\Cadastros\\EmpresaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Controllers\\Cadastros\\EmpresaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Nginx\\default.conf||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Nginx\\default.conf||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Services\\ACBr\\AcbrMonitorService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\ACBr\\AcbrMonitorService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:12:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:13:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:14:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:15:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:16:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PdvTipoPlanoController.cs",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\PDV\\PdvTipoPlanoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PDV\\PdvTipoPlanoController.cs",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\PDV\\PdvTipoPlanoController.cs",
+              "RelativeToolTip": "Controllers\\PDV\\PdvTipoPlanoController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T13:55:51.594Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PdvPlanoPagamentoController.cs",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\PDV\\PdvPlanoPagamentoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PDV\\PdvPlanoPagamentoController.cs",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\PDV\\PdvPlanoPagamentoController.cs",
+              "RelativeToolTip": "Controllers\\PDV\\PdvPlanoPagamentoController.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T13:55:45.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-18T13:55:38.375Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ErpTipoPlanoController.cs",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\Cadastros\\ErpTipoPlanoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Cadastros\\ErpTipoPlanoController.cs",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\Cadastros\\ErpTipoPlanoController.cs",
+              "RelativeToolTip": "Controllers\\Cadastros\\ErpTipoPlanoController.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T13:55:30.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\docker-compose.yml",
+              "RelativeDocumentMoniker": "docker-compose.yml",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\docker-compose.yml",
+              "RelativeToolTip": "docker-compose.yml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2026-05-18T13:54:51.347Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Dockerfile",
+              "RelativeDocumentMoniker": "Dockerfile",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Dockerfile",
+              "RelativeToolTip": "Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-18T13:54:49.814Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "EmpresaController.cs",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\Cadastros\\EmpresaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Cadastros\\EmpresaController.cs",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Controllers\\Cadastros\\EmpresaController.cs",
+              "RelativeToolTip": "Controllers\\Cadastros\\EmpresaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T13:54:39.523Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "default.conf",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Nginx\\default.conf",
+              "RelativeDocumentMoniker": "Nginx\\default.conf",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Nginx\\default.conf",
+              "RelativeToolTip": "Nginx\\default.conf",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-18T13:54:29.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AcbrMonitorService.cs",
+              "DocumentMoniker": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Services\\ACBr\\AcbrMonitorService.cs",
+              "RelativeDocumentMoniker": "Services\\ACBr\\AcbrMonitorService.cs",
+              "ToolTip": "C:\\Users\\krist\\OneDrive\\\u00C1rea de Trabalho\\Retaguarda\\T2TiRetaguardaSH\\Services\\ACBr\\AcbrMonitorService.cs",
+              "RelativeToolTip": "Services\\ACBr\\AcbrMonitorService.cs",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T13:54:16.689Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
