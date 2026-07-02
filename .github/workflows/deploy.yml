@@ -1,65 +1,22 @@
-name: Deploy Retaguarda API
+name: Deploy API
 
 on:
-  release:
-    types: [published]
-
-env:
-  HUSKY: 0
+  push:
+    branches: [main]
 
 jobs:
-  test:
-    name: Build e Testes
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Restaurar dependencias
-        run: dotnet restore T2TiRetaguardaSH.sln
-
-      - name: Build
-        run: dotnet build T2TiRetaguardaSH.sln --no-restore --nologo -v quiet
-
-      - name: Testes
-        run: dotnet test T2TiRetaguardaSH.sln --no-build --nologo -v quiet
-
   deploy:
     name: Deploy no servidor
-    needs: test
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Instalar sshpass
+        run: sudo apt-get install -y sshpass
 
-      - name: Instalar sshpass e rsync
-        run: sudo apt-get install -y sshpass rsync
-
-      - name: Sincronizar codigo no servidor
-        env:
-          SSHPASS: ${{ secrets.DEPLOY_PASSWORD }}
-        run: |
-          rsync -avz --delete \
-            -e "sshpass -e ssh -o StrictHostKeyChecking=no" \
-            --exclude 'appsettings.json' \
-            --exclude 'appsettings.Development.json' \
-            --exclude 'bin/' \
-            --exclude 'obj/' \
-            --exclude 'publish-retaguarda/' \
-            T2TiRetaguardaSH/ \
-            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/opt/T2TiRetaguardaSH/
-
-      - name: Rebuild e restart container
+      - name: Deploy no servidor
         env:
           SSHPASS: ${{ secrets.DEPLOY_PASSWORD }}
         run: |
           sshpass -e ssh -o StrictHostKeyChecking=no \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
-            "set -e
-             cd /opt/T2TiRetaguardaSH
-             docker compose build app_dotnet
-             docker compose up -d app_dotnet
-             docker exec t2ti-proxy-nginx nginx -s reload || true
-             echo 'Deploy OK: ${{ github.event.release.tag_name }}'"
+            "cd /opt/synflux/api && git pull origin main && cd T2TiRetaguardaSH && docker compose up -d --build && echo 'Deploy API OK'"
