@@ -277,8 +277,16 @@ namespace T2TiRetaguardaSH.Services.Sincronizacao
         private static async Task<List<string>> ListarTabelasOperacionaisAsync(MySqlConnection connection)
         {
             var tabelas = new List<string>();
-            await using var cmd = new MySqlCommand(
-                "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() ORDER BY TABLE_NAME",
+            await using var cmd = new MySqlCommand(@"
+                SELECT t.TABLE_NAME
+                  FROM INFORMATION_SCHEMA.TABLES t
+                 WHERE t.TABLE_SCHEMA = DATABASE()
+                   AND (SELECT COUNT(*)
+                          FROM INFORMATION_SCHEMA.COLUMNS c
+                         WHERE c.TABLE_SCHEMA = t.TABLE_SCHEMA
+                           AND c.TABLE_NAME   = t.TABLE_NAME
+                           AND c.COLUMN_NAME IN ('ID_LOCAL','DADOS_JSON','HASH_SHA256','ID_EMPRESA','EXCLUIDO')) = 5
+                 ORDER BY t.TABLE_NAME",
                 connection);
             await using var reader = await cmd.ExecuteReaderAsync();
             while (await reader.ReadAsync())
