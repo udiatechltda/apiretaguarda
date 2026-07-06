@@ -1,6 +1,6 @@
 /********************************************************************************
 Title: T2Ti ERP Fenix
-Description: Biblioteca de funções.
+Description: Biblioteca de funï¿½ï¿½es.
 
 The MIT License
 
@@ -62,8 +62,6 @@ namespace T2TiRetaguardaSH.Util
 
             string host = iniFile.IniReadString("Email", "Host", "");
             int port = iniFile.IniReadInt("Email", "Port", 0);
-            //string from = iniFile.IniReadString("Email", "From"); 
-            //string bccList = iniFile.get("Email", "BccList"); 
             string userName = iniFile.IniReadString("Email", "Username", "");
             string password = iniFile.IniReadString("Email", "Password", "");
 
@@ -76,10 +74,12 @@ namespace T2TiRetaguardaSH.Util
             if (string.IsNullOrWhiteSpace(password))
                 password = Config?["Email:Password"] ?? "";
             if (string.IsNullOrWhiteSpace(userName))
-                throw new Exception("ERRO: Username (remetente) está vazio no config-email.ini");
-            if (string.IsNullOrWhiteSpace(destino)) throw new Exception("ERRO: Destino (e-mail do cliente) está vazio na chamada EnviarEmail");
-            
-            var fromAddress = new MailAddress(userName);
+                throw new Exception("ERRO: Username (remetente) estÃ¡ vazio no config-email.ini");
+            if (string.IsNullOrWhiteSpace(destino))
+                throw new Exception("ERRO: Destino (e-mail do cliente) estÃ¡ vazio na chamada EnviarEmail");
+
+            var displayName = Config?["Email:FromDisplayName"] ?? "Synflux PDV";
+            var fromAddress = new MailAddress(userName, displayName);
             var toAddress = new MailAddress(destino);
 
             var smtp = new SmtpClient
@@ -434,7 +434,7 @@ namespace T2TiRetaguardaSH.Util
         public static string Modulo11(string chave)
         {
             int soma = 0; // Vai guardar a Soma
-            int mod = -1; // Vai guardar o Resto da divisão
+            int mod = -1; // Vai guardar o Resto da divisï¿½o
             int dv = -1;  // Vai guardar o DigitoVerificador
             int pesso = 2; // vai guardar o pesso de multiplicacao
 
@@ -450,9 +450,9 @@ namespace T2TiRetaguardaSH.Util
                     pesso = 2;
             }
 
-            //Agora que tenho a soma vamos pegar o resto da divisão por 11
+            //Agora que tenho a soma vamos pegar o resto da divisï¿½o por 11
             mod = soma % 11;
-            //Aqui temos uma regrinha, se o resto da divisão for 0 ou 1 então o dv vai ser 0
+            //Aqui temos uma regrinha, se o resto da divisï¿½o for 0 ou 1 entï¿½o o dv vai ser 0
             if (mod == 0 || mod == 1)
                 dv = 0;
             else

@@ -323,18 +323,72 @@ namespace T2TiRetaguardaSH.Services
             if (string.IsNullOrWhiteSpace(destino))
                 throw new InvalidOperationException("E-mail de confirmacao nao informado.");
 
-            string corpo = "";
-            corpo = corpo + "<html>";
-            corpo = corpo + "<body>";
-            corpo = corpo + "<p>Ola " + nome + ", </p>";
-            corpo = corpo + "<p>Parabens pelo seu cadastro no Tech One PDV. Segue o codigo de confirmacao para liberar o uso da aplicacao.</p>";
-            corpo = corpo + "<p>Informe o seguinte codigo na aplicacao: " + codigo + "</p>";
-            corpo = corpo + "<p>Atenciosamente,</p>";
-            corpo = corpo + "<p>Equipe Tech One</p>";
-            corpo = corpo + "</body>";
-            corpo = corpo + "</html>";
+            var corpo = $@"
+<!DOCTYPE html>
+<html lang=""pt-BR"">
+<head>
+  <meta charset=""UTF-8"">
+  <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+</head>
+<body style=""margin:0;padding:0;background:#f4f4f7;font-family:Arial,sans-serif;"">
+  <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background:#f4f4f7;padding:40px 0;"">
+    <tr>
+      <td align=""center"">
+        <table width=""600"" cellpadding=""0"" cellspacing=""0"" style=""background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);"">
 
-            Biblioteca.EnviarEmail("Tech One PDV - Codigo de Confirmacao", destino, corpo);
+          <!-- Cabecalho -->
+          <tr>
+            <td style=""background:#0f0f1a;padding:32px 40px;text-align:center;"">
+              <span style=""font-size:26px;font-weight:bold;color:#ffffff;letter-spacing:1px;"">Syn<span style=""color:#7c6af7;"">Flux</span> PDV</span>
+            </td>
+          </tr>
+
+          <!-- Corpo -->
+          <tr>
+            <td style=""padding:40px;color:#333333;"">
+              <p style=""margin:0 0 16px;font-size:16px;"">Olá, <strong>{System.Net.WebUtility.HtmlEncode(nome)}</strong>!</p>
+              <p style=""margin:0 0 16px;font-size:15px;line-height:1.6;"">
+                Obrigado por se cadastrar no <strong>SynFlux PDV</strong>.<br>
+                Use o código abaixo para confirmar seu acesso ao sistema:
+              </p>
+
+              <!-- Caixa do codigo -->
+              <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""margin:24px 0;"">
+                <tr>
+                  <td align=""center"" style=""background:#f0eeff;border-left:4px solid #7c6af7;border-radius:4px;padding:20px;"">
+                    <span style=""font-size:20px;font-weight:bold;letter-spacing:6px;color:#0f0f1a;font-family:monospace;"">{System.Net.WebUtility.HtmlEncode(codigo)}</span>
+                  </td>
+                </tr>
+              </table>
+
+              <p style=""margin:0 0 16px;font-size:15px;line-height:1.6;"">
+                Informe este código na tela de confirmação do aplicativo para liberar o acesso.
+              </p>
+              <p style=""margin:0;font-size:13px;color:#888888;"">
+                Se você não realizou este cadastro, ignore este e-mail com segurança.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Rodape -->
+          <tr>
+            <td style=""background:#f4f4f7;padding:24px 40px;text-align:center;border-top:1px solid #eeeeee;"">
+              <p style=""margin:0 0 6px;font-size:12px;color:#aaaaaa;"">
+                © {DateTime.UtcNow.Year} Synflux &nbsp;|&nbsp;
+                <a href=""https://synflux.com.br"" style=""color:#7c6af7;text-decoration:none;"">synflux.com.br</a>
+              </p>
+              <p style=""margin:0;font-size:11px;color:#bbbbbb;"">Este é um e-mail automático, por favor não responda.</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>";
+
+            Biblioteca.EnviarEmail("SynFlux PDV - Código de Confirmação", destino, corpo);
         }
 
         public void ConferirCodigoConfirmacao(Empresa objeto, string codigoConfirmacao)
