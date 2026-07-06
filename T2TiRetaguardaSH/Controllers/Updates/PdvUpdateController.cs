@@ -27,7 +27,10 @@ namespace T2TiRetaguardaSH.Controllers.Updates
             var releaseNotes = section.GetValue<string>("ReleaseNotes") ?? string.Empty;
 
             if (!string.IsNullOrWhiteSpace(packageUrl) && Uri.TryCreate(packageUrl, UriKind.Relative, out _))
-                packageUrl = $"{Request.Scheme}://{Request.Host}{packageUrl}";
+            {
+                var scheme = Request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? Request.Scheme;
+                packageUrl = $"{scheme}://{Request.Host}{packageUrl}";
+            }
 
             return Ok(new
             {
