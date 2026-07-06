@@ -21,6 +21,25 @@ namespace T2TiRetaguardaSH.Controllers.Sincronizacao
             _snapshotService = snapshotService;
         }
 
+        [HttpGet("restore")]
+        public async Task<IActionResult> Restore()
+        {
+            try
+            {
+                var sessao = await _authService.ValidarTokenAsync(ExtrairToken());
+                var resposta = await _snapshotService.RestaurarSnapshotAsync(sessao.Empresa.Id, sessao.Empresa.Cnpj);
+                return Ok(resposta);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return StatusCode(401, new RetornoJsonErro(401, ex.Message, null));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoJsonErro(500, "Erro no servidor [Restore PDV]", ex));
+            }
+        }
+
         [HttpPost("snapshot")]
         public async Task<IActionResult> Snapshot([FromBody] PdvSnapshotRequest request)
         {

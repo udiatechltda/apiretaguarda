@@ -31,4 +31,14 @@ namespace T2TiRetaguardaSH.Models.Sincronizacao
         public int TotalRegistros { get; set; }
         public DateTime SincronizadoEm { get; set; }
     }
+
+    public class PdvRestoreResponse
+    {
+        public string Cnpj { get; set; }
+        public string BancoOperacional { get; set; }
+        public int TotalTabelas { get; set; }
+        public int TotalRegistros { get; set; }
+        public DateTime RestauradoEm { get; set; }
+        public List<PdvSnapshotTable> Tabelas { get; set; } = new List<PdvSnapshotTable>();
+    }
 }

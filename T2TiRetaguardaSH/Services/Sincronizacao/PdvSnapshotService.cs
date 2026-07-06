@@ -192,6 +192,105 @@ namespace T2TiRetaguardaSH.Services.Sincronizacao
             };
         }
 
+        private static readonly HashSet<string> TabelasInfraestrutura = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "PDV_SYNC_EXECUCAO",
+            "PDV_SYNC_REGISTRO",
+            "PDV_SYNC_CONFLITO",
+            "PDV_DISPOSITIVO",
+            "PDV_AUDITORIA_OPERACIONAL",
+            "INTEGRACAO_OUTBOX",
+            "INTEGRACAO_CONFLITO",
+            "INTEGRACAO_LOG"
+        };
+
+        public async Task<PdvRestoreResponse> RestaurarSnapshotAsync(int empresaId, string cnpj)
+        {
+            if (empresaId <= 0)
+                throw new ArgumentException("Empresa invalida para restauracao.");
+
+            cnpj = NormalizarCnpj(cnpj);
+            var operacionalDatabase = NomeBancoOperacional();
+            var agora = DateTime.UtcNow;
+
+            await using var connection = new MySqlConnection(_adminConnectionString);
+            await connection.OpenAsync();
+
+            await using var checkCmd = new MySqlCommand(
+                "SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = @db",
+                connection);
+            checkCmd.Parameters.AddWithValue("@db", operacionalDatabase);
+            var dbExists = Convert.ToInt32(await checkCmd.ExecuteScalarAsync()) > 0;
+
+            if (!dbExists)
+            {
+                return new PdvRestoreResponse
+                {
+                    Cnpj = cnpj,
+                    BancoOperacional = operacionalDatabase,
+                    TotalTabelas = 0,
+                    TotalRegistros = 0,
+                    RestauradoEm = agora
+                };
+            }
+
+            await ExecutarAsync(connection, $"USE `{operacionalDatabase}`");
+
+            var nomeTabelas = await ListarTabelasOperacionaisAsync(connection);
+            var resultado = new List<PdvSnapshotTable>();
+
+            foreach (var nomeTabela in nomeTabelas)
+            {
+                var tabela = new PdvSnapshotTable { Nome = nomeTabela };
+
+                await using var cmd = new MySqlCommand(
+                    $"SELECT ID_LOCAL, DADOS_JSON, HASH_SHA256 FROM `{nomeTabela}` WHERE ID_EMPRESA = @empresaId AND EXCLUIDO = 'N'",
+                    connection);
+                cmd.Parameters.AddWithValue("@empresaId", empresaId);
+
+                await using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    tabela.Registros.Add(new PdvSnapshotRecord
+                    {
+                        IdLocal = reader.IsDBNull(0) ? string.Empty : reader.GetString(0),
+                        DadosJson = reader.IsDBNull(1) ? "{}" : reader.GetString(1),
+                        Hash = reader.IsDBNull(2) ? string.Empty : reader.GetString(2)
+                    });
+                }
+
+                if (tabela.Registros.Count > 0)
+                    resultado.Add(tabela);
+            }
+
+            return new PdvRestoreResponse
+            {
+                Cnpj = cnpj,
+                BancoOperacional = operacionalDatabase,
+                TotalTabelas = resultado.Count,
+                TotalRegistros = resultado.Sum(t => t.Registros.Count),
+                RestauradoEm = agora,
+                Tabelas = resultado
+            };
+        }
+
+        private static async Task<List<string>> ListarTabelasOperacionaisAsync(MySqlConnection connection)
+        {
+            var tabelas = new List<string>();
+            await using var cmd = new MySqlCommand(
+                "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() ORDER BY TABLE_NAME",
+                connection);
+            await using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                var nome = reader.GetString(0);
+                if (!TabelasInfraestrutura.Contains(nome))
+                    tabelas.Add(nome);
+            }
+
+            return tabelas;
+        }
+
         private async Task GarantirBancoOperacionalAsync(MySqlConnection connection, string operacionalDatabase)
         {
             await ExecutarAsync(
